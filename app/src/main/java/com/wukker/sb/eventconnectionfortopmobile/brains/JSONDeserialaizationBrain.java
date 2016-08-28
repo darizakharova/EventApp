@@ -24,15 +24,14 @@ public class JSONDeserialaizationBrain {
     public static Conference getConference (long conferenceID) {
 
         URLHelper urlHelper;
-        String jsConference = null;
-        ArrayList<Conference> ourConferenceList = new ArrayList<Conference>();
+        String jsConference;
+        ArrayList<Conference> ourConferenceList;
         Conference ourConference = null;
         Response<Conference> conferenceResponse;
 
         try {
-
-
-            HelperParams getConference = new HelperParams(new URL(Constants.globalURL + Constants.conferencePointer + conferenceID), HTTPMethod.GET);
+            HelperParams getConference = new HelperParams(new URL(Constants.GLOBAL_URL +
+                    Constants.CONFERENCE_POINTER + conferenceID), HTTPMethod.GET);
             urlHelper = new URLHelper();
             urlHelper.execute(getConference);
             jsConference = urlHelper.get();
@@ -46,8 +45,7 @@ public class JSONDeserialaizationBrain {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
+          }
         return ourConference;
     }
 
@@ -58,8 +56,7 @@ public class JSONDeserialaizationBrain {
 
     public static Event getEvent (int n)
     {
-
-        return JSONDeserialaizationBrain.getEventList(Constants.conferenceID).get(n);
+        return JSONDeserialaizationBrain.getEventList(Constants.CONFERENCE_ID).get(n);
     }
 
     public static ArrayList<String> getEventForListView (Conference conference)
@@ -77,7 +74,7 @@ public class JSONDeserialaizationBrain {
 
     public static ArrayList<String> getStaffForListView (Event event)
     {
-        Conference conference = JSONDeserialaizationBrain.getConference(Constants.conferenceID);
+        Conference conference = JSONDeserialaizationBrain.getConference(Constants.CONFERENCE_ID);
 
         ArrayList<String> eventsAsString = new ArrayList<>();
         ArrayList<Staff> allStaff = event.getAllStaff();
@@ -114,12 +111,12 @@ public class JSONDeserialaizationBrain {
     public static String getResponse (long conferenceId)
     {
         try{
-            URL url = new URL(Constants.globalURL + Constants.conferencePointer + conferenceId + Constants.userIknowIwrongButINeedThisPointer);
-        HelperParams getConference = new HelperParams(url, HTTPMethod.GET);
+            URL url = new URL(Constants.GLOBAL_URL + Constants.CONFERENCE_POINTER + conferenceId + Constants.userIknowIwrongButINeedThisPointer);
+           HelperParams getConference = new HelperParams(url, HTTPMethod.GET);
             System.out.println(url);
-        URLHelper urlHelper = new URLHelper();
-        urlHelper.execute(getConference);
-        return urlHelper.get();
+            URLHelper urlHelper = new URLHelper();
+            urlHelper.execute(getConference);
+         return urlHelper.get();
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -135,11 +132,8 @@ public class JSONDeserialaizationBrain {
         Conference ourConference = null;
         Response<Conference> conferenceResponse;
 
-
         try {
-
-
-            HelperParams getConference = new HelperParams(new URL(Constants.globalURL + Constants.conferencePointer + conferenceID), HTTPMethod.GET);
+            HelperParams getConference = new HelperParams(new URL(Constants.GLOBAL_URL + Constants.CONFERENCE_POINTER + conferenceID), HTTPMethod.GET);
             urlHelper = new URLHelper();
             System.out.println(getConference.getUrl());
             urlHelper.execute(getConference);

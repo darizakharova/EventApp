@@ -7,21 +7,21 @@ import java.io.Serializable;
  */
 public class User extends Base implements Serializable
 {
-    Long id;
-    String firstname;
-    String lastname;
-    String middlename;
-    String companyName;
-    String email;
-    String phone;
-    String oauthToken;
-    Boolean visible;
-    Long oauthTokenExpireDate;
-    String photo;
-    String socialID;
-    String position;
-    Long dateCreated;
-    Long lastUpdated;
+    private Long id;
+    private String firstname;
+    private String lastname;
+    private String middlename;
+    private String companyName;
+    private String email;
+    private String phone;
+    private String oauthToken;
+    private Boolean visible;
+    private Long oauthTokenExpireDate;
+    private String photo;
+    private String socialID;
+    private String position;
+    private Long dateCreated;
+    private Long lastUpdated;
 
 
     public User()

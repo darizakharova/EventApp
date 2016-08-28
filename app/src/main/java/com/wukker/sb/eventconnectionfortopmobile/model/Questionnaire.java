@@ -6,37 +6,41 @@ import java.io.Serializable;
  * Created by sb on 12.11.15.
  */
 public class Questionnaire implements Serializable {
-    Long userId;
-    Long conferenceId;
-    Integer organizationalScore;
-    Integer registrationProcess;
-    Integer organizerWorkScore;
-    Integer themesRelevanceScore;
-    Long bestModeratorEventId;
-    Long bestModeratorId;
-    Long bestSpeakerEventId;
-    Long bestSpeakerId;
-    Long bestEventId;
-    String wishes;
-    String comment;
+    private long userId;
+    private long conferenceId;
+    private int organizationalScore;
+    private int registrationProcess;
+    private int organizerWorkScore;
+    private int themesRelevanceScore;
+    private long bestModeratorEventId;
+    private long bestModeratorId;
+    private long bestSpeakerEventId;
+    private long bestSpeakerId;
+    private long bestEventId;
+    private String wishes;
+    private String comment;
 
-    public Questionnaire(Long userId, Long conferenceId) {
+    public Questionnaire(long userId, long conferenceId) {
         this.userId = userId;
         this.conferenceId = conferenceId;
-        this.organizationalScore = null;
-        this.registrationProcess = null;
-        this.organizerWorkScore = null;
-        this.themesRelevanceScore = null;
-        this.bestModeratorEventId = null;
-        this.bestModeratorId = null;
-        this.bestSpeakerEventId = null;
-        this.bestSpeakerId = null;
-        this.bestEventId = null;
+        this.organizationalScore = 0;
+        this.registrationProcess = 0;
+        this.organizerWorkScore = 0;
+        this.themesRelevanceScore = 0;
+        this.bestModeratorEventId = 0;
+        this.bestModeratorId = 0;
+        this.bestSpeakerEventId = 0;
+        this.bestSpeakerId = 0;
+        this.bestEventId = 0;
         this.wishes = null;
         this.comment = null;
     }
 
-    public Questionnaire(Long userId, Long conferenceId, Integer organizationalScore, Integer registrationProcess, Integer organizerWorkScore, Integer themesRelevanceScore, Long bestModeratorEventId, Long bestModeratorId, Long bestSpeakerEventId, Long bestSpeakerId, Long bestEventId, String wishes, String comment) {
+    public Questionnaire(long userId, long conferenceId, int organizationalScore,
+                         int registrationProcess, int organizerWorkScore,
+                         int themesRelevanceScore,
+                         long bestModeratorEventId, long bestModeratorId, long bestSpeakerEventId,
+                         long bestSpeakerId, long bestEventId, String wishes, String comment) {
         this.userId = userId;
         this.conferenceId = conferenceId;
         this.organizationalScore = organizationalScore;
@@ -52,39 +56,39 @@ public class Questionnaire implements Serializable {
         this.comment = comment;
     }
 
-    public void setOrganizationalScore(Integer organizationalScore) {
+    public void setOrganizationalScore(int organizationalScore) {
         this.organizationalScore = organizationalScore;
     }
 
-    public void setRegitrationProcess(Integer regitrationProcess) {
+    public void setRegitrationProcess(int regitrationProcess) {
         this.registrationProcess = regitrationProcess;
     }
 
-    public void setOrganizerWorkScore(Integer organizerWorkScore) {
+    public void setOrganizerWorkScore(int organizerWorkScore) {
         this.organizerWorkScore = organizerWorkScore;
     }
 
-    public void setThemesRelevanceScore(Integer themesRelevanceScore) {
+    public void setThemesRelevanceScore(int themesRelevanceScore) {
         this.themesRelevanceScore = themesRelevanceScore;
     }
 
-    public void setBestModeratorEventId(Long bestModeratorEventId) {
+    public void setBestModeratorEventId(long bestModeratorEventId) {
         this.bestModeratorEventId = bestModeratorEventId;
     }
 
-    public void setBestModeratorId(Long bestModeratorId) {
+    public void setBestModeratorId(long bestModeratorId) {
         this.bestModeratorId = bestModeratorId;
     }
 
-    public void setBestSpeakerEventId(Long bestSpeakerEventId) {
+    public void setBestSpeakerEventId(long bestSpeakerEventId) {
         this.bestSpeakerEventId = bestSpeakerEventId;
     }
 
-    public void setBestSpeakerId(Long bestSpeakerId) {
+    public void setBestSpeakerId(long bestSpeakerId) {
         this.bestSpeakerId = bestSpeakerId;
     }
 
-    public void setBestEventId(Long bestEventId) {
+    public void setBestEventId(long bestEventId) {
         this.bestEventId = bestEventId;
     }
 
@@ -96,7 +100,7 @@ public class Questionnaire implements Serializable {
         this.comment = comment;
     }
 
-    public Long getUserId() {
+    public long getUserId() {
         return userId;
     }
 }

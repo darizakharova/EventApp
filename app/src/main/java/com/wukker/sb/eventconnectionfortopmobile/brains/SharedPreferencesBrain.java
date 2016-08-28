@@ -25,20 +25,13 @@ import java.util.concurrent.ExecutionException;
 public class SharedPreferencesBrain {
 
     public SharedPreferences setEventConnectionSP(SPHelperParams spHelperParams) {
-
-
-
-
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper();
         sharedPreferencesHelper.execute(spHelperParams);
-
-
         return spHelperParams.getSharedPreferences();
     }
 
     public static void saveUser (User user, SharedPreferences sharedPreferences)
     {
-
         //Convert user to json
         JSONObject userAsJson = null;
 
@@ -51,19 +44,17 @@ public class SharedPreferencesBrain {
             //TODO
             e.printStackTrace();
         }
-
-
         //Saving user in SharedPreferences
         SPHelperParams userSPHelper = new SPHelperParams(userAsJson, Constants.name, sharedPreferences);
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper();
         sharedPreferencesHelper.execute(userSPHelper);
-
     }
 
     public static User readUser(SharedPreferences sharedPreferences)
     {
         try {
-            SPHelperParams spHelperParams = new SPHelperParams(SharedPreferencesFields.STRING, sharedPreferences, Constants.name);
+            SPHelperParams spHelperParams = new SPHelperParams(SharedPreferencesFields.STRING,
+                    sharedPreferences, Constants.name);
             SharedPreferencesReader sharedPreferencesReader = new SharedPreferencesReader();
             sharedPreferencesReader.execute(spHelperParams);
             String userAsJson = sharedPreferencesReader.get();
@@ -89,14 +80,14 @@ public class SharedPreferencesBrain {
         SPHelperParams userSPHelper = new SPHelperParams(hasVisited, Constants.hasVisited, sharedPreferences);
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper();
         sharedPreferencesHelper.execute(userSPHelper);
-
     }
 
     public static int getRating (String name, SharedPreferences sharedPreferences)
     {
             int getInt;
             try {
-                SPHelperParams spHelperParams = new SPHelperParams(SharedPreferencesFields.INT, sharedPreferences, name);
+                SPHelperParams spHelperParams = new SPHelperParams(SharedPreferencesFields.INT,
+                        sharedPreferences, name);
                 SharedPreferencesReader sharedPreferencesReader = new SharedPreferencesReader();
                 sharedPreferencesReader.execute(spHelperParams);
                 getInt = Integer.parseInt(sharedPreferencesReader.get());
@@ -115,12 +106,9 @@ public class SharedPreferencesBrain {
 
     public static void saveRating (int rating, SharedPreferences sharedPreferences, String name)
     {
-
-
         //Saving user in SharedPreferences
         SPHelperParams userSPHelper = new SPHelperParams(rating, name, sharedPreferences);
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper();
         sharedPreferencesHelper.execute(userSPHelper);
-
     }
 }

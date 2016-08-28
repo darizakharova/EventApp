@@ -17,6 +17,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+
     }
     buildTypes {
         release {
@@ -25,6 +27,7 @@ android {
             signingConfig signingConfigs.config
         }
     }
+
 }
 
 repositories { mavenCentral() }
@@ -32,6 +35,7 @@ repositories { mavenCentral() }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.0.0'
-    compile 'com.facebook.android:facebook-android-sdk:3.21.1'
+    compile 'com.facebook.android:facebook-android-sdk:4.+'
     compile 'com.google.code.gson:gson:2.4'
+    compile 'com.vk:androidsdk:1.6.5'
 }

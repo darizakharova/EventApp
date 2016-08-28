@@ -6,8 +6,8 @@ import java.io.Serializable;
  * Created by sb on 06.11.15.
  */
 public class Error implements Serializable {
-    Boolean fatal;
-    String message;
+    private boolean fatal;
+    private String message;
 
     public Error(boolean fatal, String message) {
         this.fatal = fatal;

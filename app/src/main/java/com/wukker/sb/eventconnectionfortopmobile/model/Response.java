@@ -10,9 +10,9 @@ import java.util.ArrayList;
  */
 public class Response<T extends Base> implements Serializable {
 
-    Boolean hasErrors;
-    ArrayList<Error> errors;
-    ArrayList<T> response;
+    private boolean hasErrors;
+    private ArrayList<Error> errors;
+    private ArrayList<T> response;
 
     public ArrayList<T> getResponse() {
         return response;

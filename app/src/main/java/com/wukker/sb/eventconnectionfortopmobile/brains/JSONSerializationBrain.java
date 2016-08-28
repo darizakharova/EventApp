@@ -23,63 +23,34 @@ import java.util.concurrent.ExecutionException;
  */
 public class JSONSerializationBrain {
 
-    public static String postUser(User user)
-    {
-        URL url = null;
-        JSONObject userAsJson = null;
-
+    public static void postUserAsync(User user, URLHelper urlHelper){
         try {
             Gson gson = new GsonBuilder().create();
-            String userAsString = gson.toJson(user);
-            userAsJson = new JSONObject(userAsString);
-        } catch (JSONException e)
-        {
-            e.printStackTrace();
-            //TODO
-        }
-
-        String response = null;
-        URLHelper urlHelper = new URLHelper();
-        try {url = new URL(Constants.globalURL+Constants.userPointer);} catch (MalformedURLException e){ e.printStackTrace();}
-        HelperParams helperParams = new HelperParams(url, HTTPMethod.POST, userAsJson);
-        try {
+            JSONObject userAsJson = new JSONObject(gson.toJson(user));
+            URL url = new URL(Constants.GLOBAL_URL +Constants.USER_POINTER);
+            HelperParams helperParams = new HelperParams(url, HTTPMethod.POST, userAsJson);
             urlHelper.execute(helperParams);
-            response = urlHelper.get();
-        } catch (ExecutionException e)
-        {
-            e.printStackTrace();
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
+        } catch (Throwable e) {
+            throw new RuntimeException();
+            //TODO
         }
-
-        return response;
     }
 
-    public static void postStatus(String selected, User user)
-    {
-        URL url = null;
-        HelperParams helperParams;
+
+    public static void postStatusAsync(String selected, User user, URLHelper urlHelper) {
         try {
-            url = new URL(Constants.globalURL+Constants.userPointer + user.getOauthToken() + Constants.visitPointer + Constants.conferceID);
-        } catch (MalformedURLException e)
-        {
+            URL url = new URL(Constants.GLOBAL_URL +Constants.USER_POINTER + user.getOauthToken() +
+                    Constants.VISIT_POINTER + Constants.CONFERCE_ID);
+            HelperParams helperParams = new HelperParams(url, HTTPMethod.POSTFORM, "type="+
+                    VisitorType.getFromString(selected).toString());
+            urlHelper.execute(helperParams);
+        } catch (MalformedURLException  e) {
             e.printStackTrace();
             //TODO
         }
-        helperParams = new HelperParams(url, HTTPMethod.POSTFORM, "type="+ VisitorType.getFromString(selected).toString());
-       try {
-           URLHelper urlHelper = new URLHelper();
-           urlHelper.execute(helperParams);
-           String response = urlHelper.get();
-       } catch (InterruptedException e)
-       {
-           e.printStackTrace();
-       } catch (ExecutionException e)
-       {
-           e.printStackTrace();
-       }
     }
+
+
 
     public static String putRating (Rating rating, long eventID, long staffID)
     {
@@ -99,11 +70,14 @@ public class JSONSerializationBrain {
 
         String response = null;
         URLHelper urlHelper = new URLHelper();
-        if (staffID == Constants.enough)
+        if (staffID == Constants.TIMEOUT)            // WTF???
         {
-            try {url = new URL(Constants.globalURL+Constants.eventPointer + eventID + Constants.ratePointer);} catch (MalformedURLException e){ e.printStackTrace();}
+            try {url = new URL(Constants.GLOBAL_URL +Constants.EVENT_POINTER + eventID + Constants.RATE_POINTER);}
+            catch (MalformedURLException e){ e.printStackTrace();}
         } else {
-            try {url = new URL(Constants.globalURL+Constants.eventPointer + eventID + Constants.staffPointer + staffID + Constants.ratePointer);} catch (MalformedURLException e){ e.printStackTrace();}
+            try {url = new URL(Constants.GLOBAL_URL +Constants.EVENT_POINTER + eventID + Constants.STAFF_POINTER
+                    + staffID + Constants.RATE_POINTER);}
+            catch (MalformedURLException e){ e.printStackTrace();}
         }
 
         HelperParams helperParams = new HelperParams(url, HTTPMethod.PUT, ratingAsJson);
@@ -121,40 +95,20 @@ public class JSONSerializationBrain {
         return response;
     }
 
-    public static String putQuest (Questionnaire questionnaire, User user)
-    {
-        URL url = null;
-        JSONObject questAsJson = null;
-
+    public static String putQuest (Questionnaire questionnaire, User user) {
         try {
             Gson gson = new GsonBuilder().create();
-            String ratingAsString = gson.toJson(questionnaire);
-            questAsJson = new JSONObject(ratingAsString);
-
-        } catch (JSONException e)
-        {
-            e.printStackTrace();
-            //TODO
-        }
-
-        String response = null;
-        URLHelper urlHelper = new URLHelper();
-            try {url = new URL(Constants.globalURL+Constants.userPointer + user.getOauthToken() + Constants.questPointer);} catch (MalformedURLException e){ e.printStackTrace();}
-
-
-        HelperParams helperParams = new HelperParams(url, HTTPMethod.PUT, questAsJson);
-        try {
+            JSONObject questAsJson = new JSONObject(gson.toJson(questionnaire));
+            URLHelper urlHelper = new URLHelper();
+            URL url = new URL(Constants.GLOBAL_URL +Constants.USER_POINTER + user.getOauthToken() +
+                    Constants.QUEST_POINTER);
+            HelperParams helperParams = new HelperParams(url, HTTPMethod.PUT, questAsJson);
             urlHelper.execute(helperParams);
-            response = urlHelper.get();
-        } catch (ExecutionException e)
+            return  urlHelper.get(); // TODO async
+        } catch (ExecutionException |InterruptedException | JSONException | MalformedURLException e)
         {
-            e.printStackTrace();
-        } catch (InterruptedException e)
-        {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
-
-        return response;
     }
 
 }

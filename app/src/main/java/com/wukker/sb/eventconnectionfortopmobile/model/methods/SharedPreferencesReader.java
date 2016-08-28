@@ -54,7 +54,7 @@ public class SharedPreferencesReader extends AsyncTask<SPHelperParams, Void, Str
                 case LONG:
                 {result =  sphelperParam.getSharedPreferences().getLong(sphelperParam.getName(), 0)+""; break;}
                 default:
-                    result = Constants.errorBasicMessage;
+                    result = Constants.ERROR_BASIC_MESSAGE;
 
             }
 

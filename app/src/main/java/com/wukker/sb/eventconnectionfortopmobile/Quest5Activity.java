@@ -43,7 +43,7 @@ public class Quest5Activity extends AppCompatActivity {
         spinner1 = (Spinner)findViewById(R.id.spinner9);
         spinner2 = (Spinner)findViewById(R.id.spinner10);
 
-        protoEvents = JSONDeserialaizationBrain.getEventList(Constants.conferenceID);
+        protoEvents = JSONDeserialaizationBrain.getEventList(Constants.CONFERENCE_ID);
         for (Event event : protoEvents)
         {
             if (event.getEventType() != EventType.ORGANIZATIONAL)

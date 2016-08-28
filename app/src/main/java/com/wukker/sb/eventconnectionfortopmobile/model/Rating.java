@@ -6,8 +6,8 @@ import java.io.Serializable;
  * Created by sb on 11.11.15.
  */
 public class Rating extends Base implements Serializable {
-    Long userId;
-    Integer rating;
+    private long userId;
+    private int rating;
     String comment;
 
     public long getUserId() {

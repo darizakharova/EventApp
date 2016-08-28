@@ -9,31 +9,32 @@ import java.util.ArrayList;
  * Created by sb on 02.11.15.
  */
 public class Conference<T extends Base> extends Base implements Serializable {
-    Long id;
-    Long dateCreated;
-    Long lastUpdated;
-    Long dateStart;
-    Long dateEnd;
-    Boolean visible;
-    String name;
-    String brief;
-    String url;
-    ArrayList<Event> events;
+    private long id;
+    private long dateCreated;
+    private long lastUpdated;
+    private long dateStart;
+    private long dateEnd;
+    private boolean visible;
+    private String name;
+    private String brief;
+    private String url;
+    private ArrayList<Event> events;
 
     public Conference(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Conference(long id, long dateStart, long dateEnd, boolean visible, String name, String brief, String url, ArrayList<Event> events) {
+    public Conference(long id, long dateStart, long dateEnd, boolean visible,
+                      String name, String brief, String url, ArrayList<Event> events) {
         this.id = id;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
+        this.visible = visible;
         this.name = name;
         this.brief = brief;
         this.url = url;
         this.events = events;
-        this.visible = visible;
     }
 
     public long getDateStart() {

@@ -6,98 +6,66 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.RelativeLayout;
 
-import com.facebook.Session;
-import com.facebook.SessionState;
-import com.facebook.UiLifecycleHelper;
-import com.facebook.model.GraphUser;
-import com.facebook.widget.LoginButton;
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.appevents.AppEventsLogger;
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKRequest;
+import com.vk.sdk.api.VKResponse;
 import com.wukker.sb.eventconnectionfortopmobile.brains.SharedPreferencesBrain;
 import com.wukker.sb.eventconnectionfortopmobile.model.User;
 import com.wukker.sb.eventconnectionfortopmobile.model.methods.Constants;
 
+import org.json.JSONObject;
+
 public class SNRegistrationActivity extends AppCompatActivity {
 
-//Data for user-creating
-    private User visitorAsUser;
-    private String allName;
-    private String oauthToken;
-    private String socialID;
-    private long oauthTokenExpireDate;
-
-//Data for FBSDK
-    private UiLifecycleHelper uiHelper;
-    private LoginButton loginButtonFB;
-    RelativeLayout mRelativeLayout;
-
-
-//For long-term keeping on date
-    SharedPreferences sharedPreferences;
-
-//FBSDK session
-    private Session.StatusCallback statusCallback = new Session.StatusCallback() {
-        @Override
-        public void call(Session session, SessionState state, Exception exception) {
-            if (state.isOpened()) {
-                oauthToken = session.getAccessToken();
-                oauthTokenExpireDate = (session.getExpirationDate().getTime()) / 1000;
-
-                Log.d("FacebookSampleActivity", "Facebook session opened");
-            } else if (state.isClosed()) {
-                Log.d("FacebookSampleActivity", "Facebook session closed");
-            }
-        }
-    };
-
+    private CallbackManager callbackManager;
+    private AccessTokenTracker accessTokenTracker;
+    private AccessToken accessToken;
+    private VKAccessToken vkAccessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        uiHelper = new UiLifecycleHelper(this, statusCallback);
-        uiHelper.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(getApplication());
         setContentView(R.layout.activity_snregistration);
+        callbackManager = CallbackManager.Factory.create();
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        mRelativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
-
-
-        loginButtonFB = (LoginButton) findViewById(R.id.fb_login_button);
-        loginButtonFB.setUserInfoChangedCallback(new LoginButton.UserInfoChangedCallback() {
+        accessTokenTracker = new AccessTokenTracker() {
             @Override
-            public void onUserInfoFetched(GraphUser user) {
-//Flag for successfull user registration;
-                try {
-                    if (user != null) {
-//receive user IDs
-                        sharedPreferences = getSharedPreferences(Constants.name, Context.MODE_PRIVATE);
-                        allName = user.getName();
-                        socialID = Constants.fbPrefix + user.getId();
-                        String[] names = allName.split(Constants.space);
-                        visitorAsUser = new User(names[0], names[1], oauthToken, oauthTokenExpireDate, socialID);
-//Saving user data
-                        SharedPreferencesBrain.saveUser(visitorAsUser, sharedPreferences);
-//Jump to next screen
-                        Intent intent = new Intent(SNRegistrationActivity.this, VisitorRegActivity.class);
-                        startActivity(intent);
-                    } else {
-                        throw new Exception();
-                    }
+            protected void onCurrentAccessTokenChanged(
+                    AccessToken oldAccessToken,
+                    AccessToken currentAccessToken) {
+                if (currentAccessToken != null) {
+                    accessToken = currentAccessToken;
+                    processAccessToken();
                 }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-
             }
+        };
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        accessToken = AccessToken.getCurrentAccessToken();
+        if (accessToken != null) {
+            processAccessToken();
+        }
 
-        });
+        //vkAccessTokenTracker.startTracking();
+        //VKSdk.initialize(getApplicationContext());
+    }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        accessTokenTracker.stopTracking();
     }
 
     @Override
@@ -122,41 +90,103 @@ public class SNRegistrationActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //returning control to main thread
-    @Override
-    public void onResume() {
-        super.onResume();
-        uiHelper.onResume();
-    }
-
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        uiHelper.onPause();
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        uiHelper.onDestroy();
-    }
-
-    //по возвращению обратно на активность передаем все полученные данные с диалога в колбек
-    // и живем дальше счастливо
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("In result");
-        uiHelper.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode,data);
     }
 
-    //при вращении экрана и т д сохраняем все что происходит на экране,
-    // а то активити обычно обновляется. а диалог останется жив
-    @Override
-    public void onSaveInstanceState(Bundle savedState) {
-        super.onSaveInstanceState(savedState);
-        uiHelper.onSaveInstanceState(savedState);
+    private void processAccessToken() {
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.name, Context.MODE_PRIVATE);
+        User last_user = SharedPreferencesBrain.readUser(sharedPreferences);
+        String last_fb_id;
+        Intent intent;
+        String fbID = Constants.FB_PREFIX + accessToken.getUserId();
+        if (last_user != null) {
+            last_fb_id = last_user.getSocialID();
+            if (fbID.equals(last_fb_id)) {
+                intent = new Intent(SNRegistrationActivity.this, MainActivity.class);
+                startActivity(intent);
+                return;
+            }
+        }
+
+        GraphRequest request = GraphRequest.newMeRequest(accessToken,
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        try {
+                            String fbID = Constants.FB_PREFIX + accessToken.getUserId();
+                            String[] name = object.getString("name").split(" ");
+                            long oauthTokenExpireDate = (accessToken.getExpires().getTime()) / 1000;
+                            User user = new User(name[0],name[1],accessToken.getToken(),
+                                    oauthTokenExpireDate,fbID);
+                            SharedPreferences sharedPreferences =
+                                    getSharedPreferences(Constants.name, Context.MODE_PRIVATE);
+                            SharedPreferencesBrain.saveUser(user, sharedPreferences);
+                            Intent intent = new Intent(SNRegistrationActivity.this,
+                                            VisitorRegActivity.class);
+                            startActivity(intent);
+                        } catch (Exception e) {}
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "name");
+        request.setParameters(parameters);
+        request.executeAsync();
     }
+
+    private void processVKAccessToken() {
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.name, Context.MODE_PRIVATE);
+        User last_user = SharedPreferencesBrain.readUser(sharedPreferences);
+        String last_vk_id;
+        Intent intent;
+        String vkID = Constants.VK_PREFIX + vkAccessToken.userId;
+        if (last_user != null) {
+            last_vk_id = last_user.getSocialID();
+            if (vkID.equals(last_vk_id)) {
+                intent = new Intent(SNRegistrationActivity.this, MainActivity.class);
+                startActivity(intent);
+                return;
+            }
+        }
+
+        VKRequest request = VKApi.users().get();
+        request.executeWithListener(new VKRequest.VKRequestListener() {
+            @Override
+            public void onComplete(VKResponse response) {
+                super.onComplete(response);
+                try {
+                    String vkID = Constants.VK_PREFIX + vkAccessToken.userId;
+                    String first_name = response.json.getJSONArray("response").getJSONObject(0).getString("first_name");
+                    String last_name = response.json.getJSONArray("response").getJSONObject(0).getString("last_name");
+                    long oauthTokenExpireDate = vkAccessToken.expiresIn; //TODO
+                    User user = new User(first_name,last_name,vkAccessToken.accessToken,
+                            oauthTokenExpireDate,vkID);
+                    SharedPreferences sharedPreferences =
+                            getSharedPreferences(Constants.name, Context.MODE_PRIVATE);
+                    SharedPreferencesBrain.saveUser(user, sharedPreferences);
+                    Intent intent = new Intent(SNRegistrationActivity.this,
+                            VisitorRegActivity.class);
+                    startActivity(intent);
+                } catch (Exception e) {}
+            }
+        });
+    }
+
+    /*KAccessTokenTracker vkAccessTokenTracker = new VKAccessTokenTracker() {
+        @Override
+        public void onVKAccessTokenChanged(VKAccessToken oldToken, VKAccessToken newToken) {
+            if (newToken == null) {
+                throw new RuntimeException(); //TODO
+            } else {
+                vkAccessToken = newToken;
+                processVKAccessToken();
+            }
+        }
+    };
+
+    public void onVKButtonClick(View view) {
+        VKSdk.login(this);
+    }*/
 }

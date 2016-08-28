@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -19,7 +18,6 @@ import com.wukker.sb.eventconnectionfortopmobile.brains.SharedPreferencesBrain;
 import com.wukker.sb.eventconnectionfortopmobile.model.Event;
 import com.wukker.sb.eventconnectionfortopmobile.model.EventType;
 import com.wukker.sb.eventconnectionfortopmobile.model.Questionnaire;
-import com.wukker.sb.eventconnectionfortopmobile.model.Response;
 import com.wukker.sb.eventconnectionfortopmobile.model.User;
 import com.wukker.sb.eventconnectionfortopmobile.model.methods.Constants;
 
@@ -46,7 +44,7 @@ public class Quest3Activity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(Constants.name, Context.MODE_PRIVATE);
 
         spinner = (Spinner)findViewById(R.id.spinner6);
-        protoEvents = JSONDeserialaizationBrain.getEventList(Constants.conferenceID);
+        protoEvents = JSONDeserialaizationBrain.getEventList(Constants.CONFERENCE_ID);
         for (Event event: protoEvents)
         {
             if (event.getEventType() != EventType.ORGANIZATIONAL)

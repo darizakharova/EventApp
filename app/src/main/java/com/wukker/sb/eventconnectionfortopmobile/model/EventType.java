@@ -17,7 +17,6 @@ public enum EventType {
         result.add("Пленар");
         result.add("Секция");
 
-
         return result;
     }
 

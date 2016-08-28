@@ -9,17 +9,17 @@ import java.io.Serializable;
  * Created by sb on 02.11.15.
  */
 public class Staff extends Base implements Serializable {
-    Long id;
-    Long dateCreated;
-    Long lastUpdated;
-    String firstname;
-    String lastname;
-    String middlename;
-    String photo;
-    String description;
-    Integer countedRating;
-    Integer countedVoters;
-    StaffType type;
+    private long id;
+    private long dateCreated;
+    private long lastUpdated;
+    private String firstname;
+    private String lastname;
+    private String middlename;
+    private String photo;
+    private String description;
+    private int countedRating;
+    private int countedVoters;
+    private StaffType type;
 
     public Staff(String firstName, String lastName) {
         this.firstname = firstName;
@@ -101,10 +101,10 @@ public class Staff extends Base implements Serializable {
 
     public String toListString()
     {
-        return ("\n" + firstname + Constants.space + middlename + Constants.space + lastname + "\n" + description + "\n" + type);
+        return ("\n" + firstname + " " + middlename + " " + lastname + "\n" + description + "\n" + type);
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 }

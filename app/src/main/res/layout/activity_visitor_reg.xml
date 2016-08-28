@@ -7,74 +7,81 @@
     tools:context="com.wukker.sb.eventconnectionfortopmobile.VisitorRegActivity"
     android:background="@color/grey">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/сontinue"
-        android:id="@+id/textView"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:textSize="@dimen/abc_action_bar_progress_bar_size" />
+        android:orientation="vertical"
+        android:id="@+id/linearLayout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Регистрация"
+            android:id="@+id/textView"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:textSize="22dp" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/firstname"
-        android:id="@+id/textView2"
-        android:layout_below="@+id/textView"
-        android:layout_marginTop="28dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/firstname"
+            android:id="@+id/textView2"
+            android:layout_below="@+id/textView"
+            android:layout_marginTop="28dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/secondname"
-        android:id="@+id/textView3"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="28dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/textView2" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/secondname"
+            android:id="@+id/textView3"
+            android:layout_below="@+id/textView2"
+            android:layout_marginTop="28dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/textView2" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="28dp"
-        android:layout_alignEnd="@+id/textView3"
-        android:hint="@string/middlename" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView4"
+            android:layout_below="@+id/textView3"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="28dp"
+            android:layout_alignEnd="@+id/textView3"
+            android:hint="@string/middlename" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:layout_below="@+id/textView4"
-        android:layout_marginTop="28dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/textView4"
-        android:hint="@string/company" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText"
+            android:layout_below="@+id/textView4"
+            android:layout_marginTop="28dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignEnd="@+id/textView4"
+            android:hint="@string/company" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerparticipant"
+            android:layout_below="@+id/editText"
+            android:layout_alignParentStart="true" />
+
+
+    </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/goon"
         android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/editText"
         android:textColor="@color/mustard"
         android:onClick="onClick"
-        android:nestedScrollingEnabled="true" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerparticipant"
-        android:layout_below="@+id/editText"
+        android:nestedScrollingEnabled="true"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 
 </RelativeLayout>

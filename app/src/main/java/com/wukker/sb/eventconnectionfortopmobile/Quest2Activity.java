@@ -11,10 +11,8 @@ import android.view.View;
 import android.widget.RatingBar;
 
 import com.google.gson.Gson;
-import com.wukker.sb.eventconnectionfortopmobile.brains.JSONSerializationBrain;
 import com.wukker.sb.eventconnectionfortopmobile.brains.SharedPreferencesBrain;
 import com.wukker.sb.eventconnectionfortopmobile.model.Questionnaire;
-import com.wukker.sb.eventconnectionfortopmobile.model.Rating;
 import com.wukker.sb.eventconnectionfortopmobile.model.User;
 import com.wukker.sb.eventconnectionfortopmobile.model.methods.Constants;
 
@@ -34,7 +32,7 @@ public class Quest2Activity extends AppCompatActivity {
         RatingBar organizerWorkScore = (RatingBar) findViewById(R.id.organizationalExellence);
         RatingBar themesRelevanceScore = (RatingBar) findViewById(R.id.actuality);
 
-        questionnaire = new Questionnaire(user.getId(), Constants.conferenceID);
+        questionnaire = new Questionnaire(user.getId(), Constants.CONFERENCE_ID);
 
         organizationalScore.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
 

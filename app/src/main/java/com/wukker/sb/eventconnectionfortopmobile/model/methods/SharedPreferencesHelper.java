@@ -3,9 +3,6 @@ package com.wukker.sb.eventconnectionfortopmobile.model.methods;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
-import com.wukker.sb.eventconnectionfortopmobile.model.methods.Constants;
-import com.wukker.sb.eventconnectionfortopmobile.model.methods.SPHelperParams;
-
 /**
  * Created by sb on 04.11.15.
  */
@@ -13,7 +10,7 @@ public class SharedPreferencesHelper extends AsyncTask<SPHelperParams, Void, Voi
 
     public class SharedPreferencesException extends Exception
     {
-        public static final String conclusion = Constants.errorBasicMessage + Constants.errorWithSaveFile;
+        public static final String conclusion = Constants.ERROR_BASIC_MESSAGE + Constants.ERROR_WITH_SAVE_FILE;
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.wukker.sb.eventconnectionfortopmobile;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.facebook.login.LoginManager;
 import com.wukker.sb.eventconnectionfortopmobile.brains.JSONDeserialaizationBrain;
 import com.wukker.sb.eventconnectionfortopmobile.model.Conference;
 import com.wukker.sb.eventconnectionfortopmobile.model.methods.Constants;
@@ -23,9 +26,10 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Conference conference = JSONDeserialaizationBrain.getConference(Constants.conferenceID);
+        Conference conference = JSONDeserialaizationBrain.getConference(Constants.CONFERENCE_ID);
 
-        eventArray = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, JSONDeserialaizationBrain.getEventForListView(conference));
+        eventArray = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+        JSONDeserialaizationBrain.getEventForListView(conference));
         setListAdapter(eventArray);
     }
 
@@ -47,7 +51,16 @@ public class MainActivity extends ListActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.logout) {
+            LoginManager.getInstance().logOut();
+            SharedPreferences sharedPreferences = getSharedPreferences(Constants.name, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+        }
         return super.onOptionsItemSelected(item);
+
+
     }
 
     @Override

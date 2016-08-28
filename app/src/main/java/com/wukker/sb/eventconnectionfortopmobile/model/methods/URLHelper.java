@@ -2,11 +2,7 @@ package com.wukker.sb.eventconnectionfortopmobile.model.methods;
 
 import android.os.AsyncTask;
 
-import com.wukker.sb.eventconnectionfortopmobile.model.methods.HTTPMethod;
-import com.wukker.sb.eventconnectionfortopmobile.model.methods.HelperParams;
-
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,50 +14,21 @@ import java.net.HttpURLConnection;
 public class URLHelper extends AsyncTask<HelperParams, Void, String>
 {
     @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
-
-    @Override
-    protected void onPostExecute(String response) {
-        super.onPostExecute(response);
-    }
-
-    @Override
-    protected void onProgressUpdate(Void... values) {
-        super.onProgressUpdate(values);
-    }
-
-    @Override
-    protected void onCancelled(String response) {
-        super.onCancelled(response);
-    }
-
-    @Override
-    protected void onCancelled() {
-        super.onCancelled();
-    }
-
-    @Override
-    protected String doInBackground(HelperParams[] helperParamses) {
-
+    protected String doInBackground(HelperParams[] helperParamsArray) {
         String response = " ";
-        for (HelperParams helperParams: helperParamses) {
-
+        for (HelperParams helperParams: helperParamsArray) {
 
             try {
                 HttpURLConnection httpURLConnection = (HttpURLConnection) helperParams.getUrl().openConnection();
-                httpURLConnection.setConnectTimeout((int)Constants.enough);
+                httpURLConnection.setConnectTimeout((int)Constants.TIMEOUT);
+
                 switch (helperParams.getHttpMethod()) {
-
                     case POST: {
-
-                        httpURLConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                        httpURLConnection.setRequestProperty("Content-Type", Constants.REQUEST_CONTENT_TYPE);
                         httpURLConnection.setRequestMethod(HTTPMethod.POST.toString());
                         httpURLConnection.setDoOutput(true);
                         httpURLConnection.setDoInput(true);
                         httpURLConnection.setUseCaches(false);
-
 
                         DataOutputStream postToURL = new DataOutputStream(httpURLConnection.getOutputStream());
 
@@ -74,20 +41,14 @@ public class URLHelper extends AsyncTask<HelperParams, Void, String>
                         String line;
 
                         while ((line = reader.readLine()) != null) {
-
                             sb.append(line);
-
                         }
-
                         response = sb.toString();
                         reader.close();
-
-
                         httpURLConnection.disconnect();
                         break;
                     }
                     case POSTFORM: {
-
                         httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
                         httpURLConnection.setRequestMethod(HTTPMethod.POST.toString());
                         httpURLConnection.setDoOutput(true);
@@ -105,27 +66,19 @@ public class URLHelper extends AsyncTask<HelperParams, Void, String>
                     }
 
                     case GET: {
-
-                        httpURLConnection.connect();
                         BufferedReader reader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
                         StringBuilder sb = new StringBuilder();
                         String line;
                         while ((line = reader.readLine()) != null) {
-
                             sb.append(line);
-
                         }
-
                         response = sb.toString();
                         reader.close();
-
                         httpURLConnection.disconnect();
                         break;
                     }
-
                     case PUT: {
-
-                        httpURLConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                        httpURLConnection.setRequestProperty("Content-Type", Constants.REQUEST_CONTENT_TYPE);
                         httpURLConnection.setRequestMethod(HTTPMethod.PUT.toString());
                         httpURLConnection.setDoOutput(true);
                         httpURLConnection.setUseCaches(false);
@@ -136,34 +89,21 @@ public class URLHelper extends AsyncTask<HelperParams, Void, String>
                         postToURL.flush();
                         postToURL.close();
 
-
-                        response = httpURLConnection.getResponseMessage()+"";
+                        response = httpURLConnection.getResponseMessage();
                         httpURLConnection.disconnect();
                         break;
                     }
-
                     default: break;
                 }
 
             }
-            catch (NullPointerException e)
+            catch (NullPointerException | IOException e)
             {
                 //TODO
-                e.printStackTrace();
+                throw new RuntimeException();
             }
-
-            catch (IOException e) {
-                //TODO
-                e.printStackTrace();
-
-
-            }
-
         }
-
-
         return response;
-
     }
 
 

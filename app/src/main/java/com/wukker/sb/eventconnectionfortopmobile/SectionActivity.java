@@ -4,9 +4,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wukker.sb.eventconnectionfortopmobile.brains.JSONDeserialaizationBrain;
 import com.wukker.sb.eventconnectionfortopmobile.brains.JSONSerializationBrain;
@@ -22,7 +19,6 @@ import com.wukker.sb.eventconnectionfortopmobile.brains.SharedPreferencesBrain;
 import com.wukker.sb.eventconnectionfortopmobile.model.Event;
 import com.wukker.sb.eventconnectionfortopmobile.model.EventType;
 import com.wukker.sb.eventconnectionfortopmobile.model.Rating;
-import com.wukker.sb.eventconnectionfortopmobile.model.Staff;
 import com.wukker.sb.eventconnectionfortopmobile.model.User;
 import com.wukker.sb.eventconnectionfortopmobile.model.methods.Constants;
 
@@ -61,7 +57,8 @@ public class SectionActivity extends ListActivity {
 
         if (event.getEventType() != EventType.ORGANIZATIONAL)
         {
-            staffArray = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, JSONDeserialaizationBrain.getStaffForListView(event));
+            staffArray = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
+                    JSONDeserialaizationBrain.getStaffForListView(event));
             setListAdapter(staffArray);
         }
 
@@ -76,7 +73,8 @@ public class SectionActivity extends ListActivity {
                 ratingBar.setRating(rating);
                 Rating ratingAsObj = new Rating((int)rating, user.getId());
 
-                String response = JSONSerializationBrain.putRating(ratingAsObj, event.getId(), Constants.enough);
+                String response = JSONSerializationBrain.putRating(ratingAsObj, event.getId(),
+                        Constants.TIMEOUT);
                 System.out.println(response);
 
                 SharedPreferencesBrain.saveRating((int) rating, sharedPreferences, key);

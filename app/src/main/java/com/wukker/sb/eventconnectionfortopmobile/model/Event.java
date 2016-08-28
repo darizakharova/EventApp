@@ -12,17 +12,17 @@ import java.util.Locale;
  * Created by sb on 02.11.15.
  */
 public class Event extends Base implements Serializable {
-    Long id;
-    Long dateCreated;
-    Long lastUpdated;
-    Long conferenceID;
-    Long dateStart;
-    Long dateEnd;
-    EventType type;
-    Integer countedRating;
-    String name;
-    String brief;
-    ArrayList<Staff> staffs;
+    private long id;
+    private long dateCreated;
+    private long lastUpdated;
+    private long conferenceID;
+    private long dateStart;
+    private long dateEnd;
+    private EventType type;
+    private int countedRating;
+    private String name;
+    private String brief;
+    private ArrayList<Staff> staffs;
 
 
     public Event(long id, long conferenceID, String name, EventType eventType) {

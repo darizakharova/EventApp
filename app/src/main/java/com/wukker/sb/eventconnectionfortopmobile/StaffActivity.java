@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RatingBar;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.wukker.sb.eventconnectionfortopmobile.brains.JSONDeserialaizationBrain;
@@ -55,7 +54,7 @@ public class StaffActivity extends AppCompatActivity {
                 ratingBar.setRating(rating);
                 Rating ratingAsObj = new Rating((int) rating, user.getId());
 
-                String response = JSONSerializationBrain.putRating(ratingAsObj, event.getId(), Constants.enough);
+                String response = JSONSerializationBrain.putRating(ratingAsObj, event.getId(), Constants.TIMEOUT);
                 System.out.println(response);
 
 
