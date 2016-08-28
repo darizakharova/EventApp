@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">EventConnectionForTopMobile</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_snregistration">SNRegistrationActivity</string>
+    <string name="title_activity_visitor_reg">VisitorRegActivity</string>
+    <string name="сontinue">Для регистрации заполните форму:</string>
+    <string name="firstname">Имя</string>
+    <string name="secondname">Фамилия</string>
+    <string name="middlename">Отчество (Необязательный параметр)</string>
+    <string name="company">Компания</string>
+    <string name="goon">Продолжить</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="fb_api_key">175803886095995</string>
+    <string name="title_activity_conference">ConferenceActivity</string>
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="title_activity_section">SectionActivity</string>
+    <string name="title_activity_staff">StaffActivity</string>
+    <string name="title_activity_user_list">UserListActivity</string>
+    <string name="title_activity_quest1">Quest1Activity</string>
+    <string name="empty" />
+    <string name="title_activity_quest2">Quest2Activity</string>
+    <string name="invitation">Пожалуйста, заполните анкету, это необходимо для участия в розыгрыше ценного подарка!</string>
+    <string name="back">Вернуться</string>
+    <string name="step1">Шаг 1 из 6</string>
+    <string name="title_activity_quest3">Quest3Activity</string>
+    <string name="pleaseShare">Пожалуйста, укажите, насколько Вы остались довольны мероприятием:</string>
+    <string name="conferenceHall">Место проведения, оборудование и питание</string>
+    <string name="registrationprocess">Процесс регистрации</string>
+    <string name="organizationalexellence">Работа организаторов</string>
+    <string name="actuality">Актуальность рассматриваемых тем</string>
+    <string name="step2">Шаг 2 из 6</string>
+    <string name="chooseSection">Выберите лучшую секцию:</string>
+    <string name="title_activity_quest4">Quest4Activity</string>
+    <string name="chooseModerator">Выберите лучшего модератора</string>
+    <string name="choosemoderatorsection">Выберите секцию, в которой был лучший модератор</string>
+    <string name="title_activity_quest5">Quest5Activity</string>
+    <string name="step3">Шаг 3 из 6</string>
+    <string name="step4">Шаг 4 из 6</string>
+    <string name="title_activity_quest6">Quest6Activity</string>
+</resources>

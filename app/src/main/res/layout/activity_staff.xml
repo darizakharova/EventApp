@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    android:layout_width="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
+    android:background="@color/grey">
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="300dip"
+        android:layout_gravity="center_horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/goon"
+                android:id="@+id/textStaff"
+                android:layout_marginTop="79dp" />
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RatingBar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ratingBar"
+            style="@style/CustomRatingBar"
+            android:numStars="5"
+            android:rating="0"
+            android:stepSize="0.5"
+            android:onClick=""
+            android:mirrorForRtl="false"
+            android:layout_gravity="left|right" />
+        <!-- android:layout_column="0"-->
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mustard">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:background="@color/mustard">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButtonProg"
+                android:layout_column="0"
+                android:src="@drawable/a4_ec_pix_proggrey"
+                android:onClick="onClick"
+                android:textAlignment="viewStart" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButtonList"
+                android:layout_column="1"
+                android:src="@drawable/a4_ec_pix_partgrey"
+                android:onClick="onClick"
+                android:textAlignment="center" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButtonQuest"
+                android:layout_column="2"
+                android:src="@drawable/a4_ec_pix_feedbackgrey"
+                android:onClick="onClick"
+                android:textAlignment="viewEnd" />
+        </LinearLayout>
+    </TableRow>
+</TableLayout>

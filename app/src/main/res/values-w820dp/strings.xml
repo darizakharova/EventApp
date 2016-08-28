@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="invitation">Пожалуйста, заполните анкету, это необходимо для участия в розыгрыше ценного подарка!</string>
+    <string name="pleaseShare">Пожалуйста, укажите, насколько Вы остались довольны мероприятием:</string>
+    <string name="conferenceHall">Место проведения, оборудование и питание</string>
+    <string name="registrationprocess">Процесс регистрации</string>
+    <string name="organizationalexellence">Работа организаторов</string>
+    <string name="actuality">Актуальность рассматриваемых тем</string>
+    <string name="step2">Шаг 2 из 6</string>
+    <string name="chooseSection">Выберите лучшую секцию:</string>
+    <string name="chooseModerator">Выберите лучшего модератора</string>
+    <string name="choosemoderatorsection">Выберите секцию, в которой был лучший модератор</string>
+    <string name="step3">Шаг 3 из 6</string>
+    <string name="chooseEventSpeaker">Выберите секцию, в которой были лучшие спикеры</string>
+    <string name="chooseEvent">Выберите лучшую секцию</string>
+    <string name="chooseSpeaker">Выберите лучшего спикера</string>
+</resources>
