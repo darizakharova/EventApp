@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
+import com.vk.sdk.VKSdk;
 import com.wukker.sb.eventconnectionfortopmobile.brains.JSONDeserialaizationBrain;
 import com.wukker.sb.eventconnectionfortopmobile.brains.JSONSerializationBrain;
 import com.wukker.sb.eventconnectionfortopmobile.brains.SharedPreferencesBrain;
@@ -48,16 +50,11 @@ public class StaffActivity extends AppCompatActivity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating,
                                         boolean fromUser) {
-
-
-
                 ratingBar.setRating(rating);
                 Rating ratingAsObj = new Rating((int) rating, user.getId());
 
                 String response = JSONSerializationBrain.putRating(ratingAsObj, event.getId(), Constants.TIMEOUT);
                 System.out.println(response);
-
-
             }
         });
     }
@@ -79,6 +76,16 @@ public class StaffActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        if (id == R.id.logout) {
+            LoginManager.getInstance().logOut();
+            VKSdk.logout();
+            SharedPreferences sharedPreferences = getSharedPreferences(Constants.name, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+            Intent intent = new Intent(StaffActivity.this,SNRegistrationActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

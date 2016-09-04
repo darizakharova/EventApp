@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
+import com.vk.sdk.VKSdk;
 import com.wukker.sb.eventconnectionfortopmobile.brains.JSONDeserialaizationBrain;
 import com.wukker.sb.eventconnectionfortopmobile.brains.JSONSerializationBrain;
 import com.wukker.sb.eventconnectionfortopmobile.brains.SharedPreferencesBrain;
@@ -100,7 +102,16 @@ public class SectionActivity extends ListActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
+        if (id == R.id.logout) {
+            LoginManager.getInstance().logOut();
+            VKSdk.logout();
+            SharedPreferences sharedPreferences = getSharedPreferences(Constants.name, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+            Intent intent = new Intent(SectionActivity.this,SNRegistrationActivity.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 

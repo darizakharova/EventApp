@@ -1,6 +1,8 @@
 package com.wukker.sb.eventconnectionfortopmobile;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,7 +11,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
+import com.vk.sdk.VKSdk;
 import com.wukker.sb.eventconnectionfortopmobile.brains.JSONDeserialaizationBrain;
 import com.wukker.sb.eventconnectionfortopmobile.model.Event;
 import com.wukker.sb.eventconnectionfortopmobile.model.EventType;
@@ -95,6 +99,14 @@ public class Quest5Activity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        if (id == R.id.logout) {
+            LoginManager.getInstance().logOut();
+            VKSdk.logout();
+            SharedPreferences sharedPreferences = getSharedPreferences(Constants.name, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
         }
 
         return super.onOptionsItemSelected(item);

@@ -12,6 +12,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.facebook.login.LoginManager;
+import com.vk.sdk.VKSdk;
 import com.wukker.sb.eventconnectionfortopmobile.brains.JSONDeserialaizationBrain;
 import com.wukker.sb.eventconnectionfortopmobile.brains.JSONSerializationBrain;
 import com.wukker.sb.eventconnectionfortopmobile.brains.SharedPreferencesBrain;
@@ -34,7 +36,6 @@ public class VisitorRegActivity extends AppCompatActivity {
     private EditText companyName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //marking up fields
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visitor_reg);
         spinner = (Spinner)findViewById(R.id.spinnerparticipant);
@@ -43,11 +44,9 @@ public class VisitorRegActivity extends AppCompatActivity {
         middleName = (EditText)findViewById(R.id.textView4);
         companyName = (EditText)findViewById(R.id.editText);
 
-        //initializing user from saved SP
         sharedPreferences = getSharedPreferences(Constants.name, Context.MODE_PRIVATE);
         user = SharedPreferencesBrain.readUser(sharedPreferences);
 
-        //filling up fields
         if (user != null) {
             firstName.setText(user.getFirstname());
             lastName.setText(user.getLastname());
@@ -57,7 +56,6 @@ public class VisitorRegActivity extends AppCompatActivity {
             throw new NullPointerException();
         }
 
-        //filling up spinner
         List<String> visitorTypeArray = VisitorType.getAsArray();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
                 visitorTypeArray);
@@ -67,7 +65,6 @@ public class VisitorRegActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_visitor_reg, menu);
         return true;
     }
@@ -81,6 +78,16 @@ public class VisitorRegActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        if (id == R.id.logout) {
+            LoginManager.getInstance().logOut();
+            VKSdk.logout();
+            SharedPreferences sharedPreferences = getSharedPreferences(Constants.name, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+            Intent intent = new Intent(VisitorRegActivity.this,SNRegistrationActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

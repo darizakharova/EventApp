@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.facebook.login.LoginManager;
+import com.vk.sdk.VKSdk;
 import com.wukker.sb.eventconnectionfortopmobile.brains.JSONDeserialaizationBrain;
 import com.wukker.sb.eventconnectionfortopmobile.model.Conference;
 import com.wukker.sb.eventconnectionfortopmobile.model.methods.Constants;
@@ -53,14 +54,15 @@ public class MainActivity extends ListActivity {
         }
         if (id == R.id.logout) {
             LoginManager.getInstance().logOut();
+            VKSdk.logout();
             SharedPreferences sharedPreferences = getSharedPreferences(Constants.name, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
             editor.apply();
+            Intent intent = new Intent(MainActivity.this,SNRegistrationActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
-
-
     }
 
     @Override
@@ -75,30 +77,25 @@ public class MainActivity extends ListActivity {
 
         switch (view.getId())
         {
-            case (R.id.imageButtonProg):
-            {
+            case (R.id.imageButtonProg): {
                 Intent intent1 = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(intent1); break;
+                startActivity(intent1);
+                break;
             }
-            case (R.id.imageButtonList):
-            {
+            case (R.id.imageButtonList): {
                 Intent intent2 = new Intent(MainActivity.this, UserListActivity.class);
-                startActivity(intent2); break;
+                startActivity(intent2);
+                break;
             }
-            case (R.id.imageButtonQuest):
-            {
+            case (R.id.imageButtonQuest): {
                 Intent intent3 = new Intent(MainActivity.this, Quest1Activity.class);
-                startActivity(intent3); break;
+                startActivity(intent3);
+                break;
             }
-            default:
-            {
+            default: {
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(intent);
             }
-
-
-
         }
-
     }
 }

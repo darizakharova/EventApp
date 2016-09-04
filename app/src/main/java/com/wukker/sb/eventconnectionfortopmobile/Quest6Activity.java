@@ -1,9 +1,15 @@
 package com.wukker.sb.eventconnectionfortopmobile;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.facebook.login.LoginManager;
+import com.vk.sdk.VKSdk;
+import com.wukker.sb.eventconnectionfortopmobile.model.methods.Constants;
 
 public class Quest6Activity extends AppCompatActivity {
 
@@ -31,7 +37,14 @@ public class Quest6Activity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
+        if (id == R.id.logout) {
+            LoginManager.getInstance().logOut();
+            VKSdk.logout();
+            SharedPreferences sharedPreferences = getSharedPreferences(Constants.name, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+        }
         return super.onOptionsItemSelected(item);
     }
 }

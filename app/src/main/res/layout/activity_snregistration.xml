@@ -36,7 +36,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="VK"
-            android:onClick="onVKButtonClick"/>
+            android:onClick="onVKButtonClick"
+            android:textColor="#FFFFFF"
+            android:background="#5E81A8"
+            android:layout_marginTop="20dp"/>
 
         <com.facebook.login.widget.LoginButton
             android:id="@+id/fb_login_button"
@@ -44,7 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="173dp" />
+            android:layout_marginBottom="173dp"
+            android:layout_marginTop="20dp"/>
 
     </LinearLayout>
 

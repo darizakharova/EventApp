@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
+import com.vk.sdk.VKSdk;
 import com.wukker.sb.eventconnectionfortopmobile.brains.JSONDeserialaizationBrain;
 import com.wukker.sb.eventconnectionfortopmobile.model.User;
 import com.wukker.sb.eventconnectionfortopmobile.model.methods.Constants;
@@ -67,10 +68,13 @@ public class UserListActivity extends AppCompatActivity {
         }
         if (id == R.id.logout) {
             LoginManager.getInstance().logOut();
+            VKSdk.logout();
             SharedPreferences sharedPreferences = getSharedPreferences(Constants.name, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.clear();
             editor.apply();
+            Intent intent = new Intent(UserListActivity.this,SNRegistrationActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
